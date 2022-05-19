@@ -1,0 +1,6 @@
+driverClass : "org.apache.hive.jdbc.HiveDriver"
+
+hive_config:
+  url : "jdbc:hive2://niit:10000/default"
+  user : "root"
+  password : "123456"

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="袁蕾 连仕杰">
+    <title>Group 2</title>
+    <link rel="stylesheet" href="./css/style.css">
+</head>
+
+<script>
+    function error() {
+        let query = window.location.search.substring(1);
+        let pair = query.split("=");
+        if (pair[1] === 'passwdError') {
+            alert("Password error!");
+        } else if (pair[1] === "notEqual") {
+            alert("Entering the password twice is different!");
+        } else if (pair[1] === "hasExit") {
+            alert('The user name already exists');
+        } else if (pair[1] === "success") {
+            alert('Sign up successfully');
+        } else if (pair[1] === "UsernameNull") {
+            alert('The user name cannot be empty');
+        }else if(pair[1] === 'notLog'){
+            alert('Sorry, You are not Logged in')
+        }
+    }
+
+    function checkLogin(arg) {
+        let sign = document.getElementById(arg)
+        let elem = sign.getElementsByTagName("input");
+        for (let i = 0; i < elem.length; i++) {
+            if (elem [i].value === "") {
+                alert("必须输入" + elem [i].placeholder);
+                elem [i].focus();
+                return false;
+            }
+        }
+        return true;
+    }
+</script>
+
+<body onload="error()">
+<div class="container">
+    <div class="welcome">
+        <!--  pink框框 -->
+        <div class="bluebox">
+
+            <!-- 注册 -->
+            <div class="signup nodisplay">
+                <h1>Register</h1>
+                <form id="a" autocomplete="off" action="SignUp" method="get" onsubmit="return checkLogin('a')">
+                    <input placeholder="Username" type="text" name="UsernameSU">
+                    <input placeholder="Email" type="email" name="EmailSU">
+                    <input placeholder="Password" type="password" name="PasswordSU">
+                    <input placeholder="Confirm Password" type="password" name="ConfirmPassword">
+                    <button class="button sumbit">Create Account</button>
+                </form>
+            </div>
+
+            <!-- 登录 -->
+            <div class="signin">
+                <h1>Sign In</h1>
+                <form id = "b" class="more-padding" autocomplete="off" action="SignIn" method="get" onsubmit="return checkLogin('b')">
+                    <input type="text" placeholder="Username" name="Username">
+                    <input type="password" placeholder="Password" name="Password">
+                    <div class="checkbox">
+                        <input type="checkbox" id="remember"/>
+                        <label for="remember">Remember Me</label>
+                    </div>
+                    <button class="buttom sumbit">Login</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="leftbox">
+            <h2 class="title"><span>MOVIE</span><br>VIEW</h2>
+            <p class="desc">Pick your perfect <span>movie</span></p>
+            <img class="image smaller"
+                 src="image/unicorn1.png" alt="独角兽"/>
+            <p class="account">Have an account?</p>
+            <button class="button" id="signin">Login</button>
+        </div>
+
+        <div class="rightbox">
+            <h2 class="title"><span>MOVIE</span><br>VIEW</h2>
+            <p class="desc">Pick your perfect <span>movie</span></p>
+            <img class="image"
+                 src="image/unicorn2.png" alt="独角兽"/>
+            <p class="account">Don't have an account?</p>
+            <button class="button" id="signup">Sign Up</button>
+        </div>
+    </div>
+</div>
+
+<!-- partial -->
+<script src="js/prefixfree.min.js"></script>
+<script src='js/jquery.min.js'></script>
+<script src="js/script.js"></script>
+</body>
+</html>

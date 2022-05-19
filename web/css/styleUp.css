@@ -1,0 +1,179 @@
+body{
+    background-color: rgb(204, 212, 230);
+    display: flex;
+    justify-content: center;
+}
+.a{
+    position: relative;
+    width: 700px;
+    height: 400px;
+    border: #fff 10px solid;
+    background-color: rgb(120,140,200);
+    top: 120px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.b{
+    position: absolute;
+    width: 200px;
+    height: 300px;
+    left: 0;
+    margin: 75px 50px;
+    transition: 1s;
+}
+.b a{
+    text-decoration: none;
+    color: #fff;
+    font: 900 28px '';
+}
+.b h2{
+    /* 鼠标放开时的动画，第一个值是动画的过渡时间
+    第二个值是延迟一秒后执行动画 */
+    transition: .5s 1s;
+    opacity: 0;
+    color: rgb(30,210,200);
+}
+.b span{
+    transition: .5s 1s;
+    color: #fff;
+    font: 500 15px '';
+    position: absolute;
+    top: 70px;
+}
+.c{
+    position: absolute;
+    top: -130px;
+    right: -240px;
+}
+.d,.e{
+    position: absolute;
+    right: calc(var(--i)*100px);
+    width: calc(var(--w)*40px);
+    height: 500px;
+    overflow: hidden;
+    border-radius: 100px;
+    transform: rotateZ(220deg) translate(0,0);
+    background: rgb(240,220,150);
+    transition: .5s .5s;
+}
+.d:nth-child(2){
+    background: rgb(240,190,230);
+}
+.e{
+    left: -470px;
+    top: -140px;
+    width: 70px;
+    background-color: rgb(90,220,150);
+}
+.a:hover .c div{
+    /* 设置延迟动画 */
+    transition: .5s calc(var(--i)*.1s);
+    /* 移动的轨迹 */
+    transform: rotateZ(220deg) translate(-200px,400px);
+}
+.a:hover .b{
+    transition: 1s .5s;
+    left: 370px;
+}
+.a:hover .b span{
+    transition: 1s .5s;
+    top: 105px;
+}
+.a:hover .b h2{
+    transition: 1s .5s;
+    opacity: 1;
+}
+.f{
+    width: 270px;
+    height: 270px;
+    position: absolute;
+    margin: 70px;
+    opacity: 0;
+    transition: .5s;
+}
+.a:hover .f{
+    transition: 1s 1.3s;
+    opacity: 1;
+}
+
+.content{
+    position: relative;
+    top: 15%;
+    left: 5%;
+    display: block;
+    align-items: center;
+}
+.content .btn{
+    height: 50px;
+    width: 170px;
+}
+.content .btn button{
+    height:100%;
+    width:100%;
+    border:none;
+    outline:none;
+    background: #949de0;
+    /*按钮字体颜色*/
+    color:#fff;
+    border-radius: 5px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition:all 0.3s ease;
+}
+.btn button:hover{
+    background: #213b82;
+}
+.content .file-name{
+    width:145px;
+    position: relative;
+    background: #949de0;
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    margin-top: 15px;
+
+}
+.content .file-name:before{
+    position: absolute;
+    content: '';
+    height: 15px;
+    width:15px;
+    background:#949de0;
+    left:65px;
+    top:2%;
+    /*尖尖气泡*/
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.content #btn {
+    height: 50px;
+    width: 170px;
+    margin: 10px;
+    border:none;
+    outline:none;
+    background: #949de0;
+    position: absolute;
+    left:-10px;
+    top:145px;
+    /*按钮字体颜色*/
+    color:#fff;
+    border-radius: 5px;
+    font-size: 18px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    cursor: pointer;
+    transition:all 0.3s ease;
+}
+input[type=submit]:hover{
+    background: #213b82;
+}
+
+#fname{
+    display : none;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
