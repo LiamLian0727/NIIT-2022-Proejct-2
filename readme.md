@@ -16,7 +16,7 @@ NIIT 2022 Proejct B3B4 Group2
 ```bash
 git -clone https://github.com/LiamLian0727/Group2.git
 ```
-**Second: run src\HiveJar\useJar' code to use our UDF function in Hive**
+**Second: run the code in [useJar](https://github.com/LiamLian0727/Group2/blob/master/src/HiveJar/useJar) to use our UDF function in Hive**
 >
 >
 **Third: Change config in hive to make it faster**
