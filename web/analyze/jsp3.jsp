@@ -24,109 +24,116 @@
 <div>
     <div class="divs" id="left" style="width:30%;float:left;">
         <form class="forms" action="../Echart3" method="post">
-            <h1 class="h">Account</h1><br>
-            <h2 class="h">Income Type: </h2><br>
-            <select class="inputs" name="type1">
-                <option value="usa_gross_income">Usa Gross Income</option>
-                <option value="worlwide_gross_income">Worlwide Gross Income</option>
-            </select>
-            <h2 class="h">Key Type: </h2><br>
-            <select class="inputs" name="type2">
-                <option value="country">Country</option>
-                <option value="production_company">Production Company</option>
-                <option value="original_title">Movie</option>
-            </select>
-            <h2 class="h">Num:</h2><input class="inputs" type="number" name="num">
-            <br><input type="submit" value="run"><br><br><br>
+            <h1 class="h">Count</h1><br>
+            <h2 class="h">Length:</h2><input class="inputs" type="number" name="len" value="10">
+            <h2 class="h">From:</h2><input class="inputs" type="number" name="from" value="1914">
+            <h2 class="h">To:</h2><input class="inputs" type="number" name="to" value="2014">
+            <br><input type="submit" value="run" onclick="gc()"><br><br><br>
             <ul>
-                <li>Type Key: Analysis of the category</li>
-                <li>Percentage Min :Minimum Percentage of works</li>
+                <li>Length: The Length of the Movie's name</li>
+                <li>From: Start year of the Query</li>
+                <li>To: End year of the Query</li>
             </ul>
         </form>
     </div>
     <div class="divs" id="right" style="width:70%;float:left;">
         <div id="main" style="width: 100%;">
-            <img src="../image/background.jpg" style="width: 100%">
+            <img src="../image/background2.jpg" style="width: 100%">
         </div>
     </div>
 </div>
 
-<script src="../js/echarts.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 
+<script type="text/javascript">
+    var dom = document.getElementById('main');
     // 基于准备好的dom，初始化echarts实例
     let query = window.location.search.substring(1);
     let pair = query.split("=");
     if (pair[1] === 'success') {
 
-        let acc = JSON.parse(JSON.stringify(${Sum}));
+        let acc = JSON.parse(JSON.stringify(${data3}));
         let list = acc.rows;
 
-        let data1 = [];
-        let data2 = [];
-        let region = [];
-        let split;
+        let date = [];
+        let data = [];
 
         for (let item of list) {
-            region.push(item.key)
-            split = item.value.split(":");
-            data1.push(split[0])
-            data2.push(split[1])
+            date.push(item.k)
+            data.push(item.v)
         }
 
+        console.log(list)
+        console.log(date)
+        console.log(data)
 
-        console.log(region);
-        console.log(data1);
-        console.log(data2);
-
-        let dom = document.getElementById('main');
         let myChart = echarts.init(dom, null, {
-            width: 700,
+            width: 800,
             height: 500
         });
-        let option;
 
-        option = {
-            title: {
-                text: 'Income or Sum'
-            },
+        let option = {
             tooltip: {
                 trigger: 'axis',
-                axisPointer: {
-                    type: 'shadow'
+                position: function (pt) {
+                    return [pt[0], '10%'];
                 }
             },
-            legend: {},
-            grid: {
-                left: '3%',
-                right: '4%',
-                bottom: '3%',
-                containLabel: true
+            title: {
+                left: 'center',
+                text: 'Number of Movies Per Year'
+            },
+            toolbox: {
+                feature: {
+                    dataZoom: {
+                        yAxisIndex: 'none'
+                    },
+                    restore: {},
+                    saveAsImage: {}
+                }
             },
             xAxis: {
-                type: 'value',
-                boundaryGap: [0, 0.01],
-                axisLabel: {
-                    formatter: (value) => {
-                        value = (value / 1000) + 'K';
-                        return value;
-                    }
-                }
+                type: 'category',
+                boundaryGap: false,
+                data: date
             },
             yAxis: {
-                type: 'category',
-                data: region
+                type: 'value',
+                boundaryGap: [0, '100%']
             },
-            series: [
+            dataZoom: [
                 {
-                    name: 'Income',
-                    type: 'bar',
-                    data: data1
+                    type: 'inside',
+                    start: 0,
+                    end: 50
                 },
                 {
-                    name: 'Budget',
-                    type: 'bar',
-                    data: data2
+                    start: 0,
+                    end: 10
+                }
+            ],
+            series: [
+                {
+                    name: 'Count',
+                    type: 'line',
+                    symbol: 'none',
+                    sampling: 'lttb',
+                    itemStyle: {
+                        color: 'rgb(255, 70, 131)'
+                    },
+                    areaStyle: {
+                        color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                            {
+                                offset: 0,
+                                color: 'rgb(255, 158, 68)'
+                            },
+                            {
+                                offset: 1,
+                                color: 'rgb(255, 70, 131)'
+                            }
+                        ])
+                    },
+                    data: data
                 }
             ]
         };
@@ -137,6 +144,64 @@
 
     } else if (pair[1] === 'error') {
         alert('error');
+    }
+
+    function gc() {
+        let myChart = echarts.init(dom, null, {
+            width: 800,
+            height: 500
+        });
+        let option = {
+            graphic: {
+                elements: [
+                    {
+                        type: 'text',
+                        left: 'center',
+                        top: 'center',
+                        style: {
+                            text: 'Analyzing the Movie',
+                            fontSize: 80,
+                            fontWeight: 'bold',
+                            lineDash: [0, 200],
+                            lineDashOffset: 0,
+                            fill: 'transparent',
+                            stroke: '#000',
+                            lineWidth: 1
+                        },
+                        keyframeAnimation: {
+                            duration: 3000,
+                            loop: true,
+                            keyframes: [
+                                {
+                                    percent: 0.7,
+                                    style: {
+                                        fill: 'transparent',
+                                        lineDashOffset: 200,
+                                        lineDash: [200, 0]
+                                    }
+                                },
+                                {
+                                    // Stop for a while.
+                                    percent: 0.8,
+                                    style: {
+                                        fill: 'transparent'
+                                    }
+                                },
+                                {
+                                    percent: 1,
+                                    style: {
+                                        fill: 'black'
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
     }
 
 </script>

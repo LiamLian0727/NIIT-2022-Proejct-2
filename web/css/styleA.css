@@ -233,6 +233,14 @@ option {
     letter-spacing: 8px;
 }
 
+.hhh {
+    font-family: "Times New Roman";
+    justify-content: space-around;
+    margin-top: 15px;
+    color: #6b74c4;
+    letter-spacing: 8px;
+}
+
 .divs {
     display: flex;
     align-items: center;

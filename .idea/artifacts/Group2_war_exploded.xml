@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="Group2:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/Group2_war_exploded</output-path>
+    <output-path>$PROJECT_DIR$/out/artifacts/Group2</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
@@ -49,8 +49,6 @@
           <element id="library" level="project" name="Maven: commons-httpclient:commons-httpclient:3.1" />
           <element id="library" level="project" name="Maven: org.apache.hive:hive-llap-common:test-jar:tests:2.3.8" />
           <element id="library" level="project" name="Maven: net.sf.jpam:jpam:1.1" />
-          <element id="library" level="project" name="Maven: tomcat:jasper-compiler:5.5.23" />
-          <element id="library" level="project" name="Maven: ant:ant:1.6.5" />
           <element id="library" level="project" name="Maven: tomcat:jasper-runtime:5.5.23" />
           <element id="library" level="project" name="Maven: commons-el:commons-el:1.0" />
           <element id="library" level="project" name="Maven: org.apache.thrift:libfb303:0.9.3" />

@@ -43,8 +43,8 @@
     <div class="banner">
         <img src="../image/background4.jpg" alt="">
         <div class="content">
-            <h3>JSP1</h3>
-            <p>You can an analysis of the jsp1</p>
+            <h3>Rank</h3>
+            <p>Rank movies by Rate</p>
             <a href="jsp1.jsp" class="btn">enter</a>
         </div>
     </div>
@@ -53,17 +53,17 @@
         <img src="../image/background1.jpg" alt="">
         <div class="content">
             <a name="view"></a>
-            <h3>JSP2</h3>
-            <p>You can an analysis of the jsp2</p>
+            <h3>Len</h3>
+            <p>Filter movies by Length</p>
             <a href="jsp2.jsp" class="btn">Enter</a>
         </div>
     </div>
 
     <div class="banner">
-        <img src="../image/background.jpg" alt="">
+        <img src="../image/background2.jpg" alt="">
         <div class="content">
             <h3>JSP3</h3>
-            <p>You can an analysis of the jsp3</p>
+            <p>Analyze the trend of Movie</p>
             <a href="jsp3.jsp" class="btn">enter</a>
         </div>
     </div>
@@ -72,16 +72,13 @@
         <img src="../image/background3.jpg" alt="">
         <div class="content">
             <h3>JSP4</h3>
-            <p>You can an analysis of the jsp4</p>
+            <p>Find the best movie of the Year/p>
             <a href="jsp4.jsp" class="btn">enter</a>
         </div>
     </div>
 
 </section>
 
-<!-- banner section ends -->
-
-<!-- custom js file link  -->
 <script src="../js/scriptA.js"></script>
 
 </body>

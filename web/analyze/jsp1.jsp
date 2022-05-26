@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,21 +22,14 @@
 <div>
     <div class="divs" id="left" style="width:30%;float:left;">
         <form class="forms" action="../Echart1" method="post">
-            <h1 class="h">Average</h1><br>
+            <h1 class="h">Rank</h1><br>
             <h2 class="h">typeKey: </h2><br>
-            <select class="inputs" name="type">
-                <option value="director">Director</option>
-                <option value="writer">Writer</option>
-                <option value="production_company">Production Company</option>
-                <option value="actors">Actors</option>
-            </select>
-            <h2 class="h">Min:</h2><input class="inputs" type="number" name="min"/><br>
-            <h2 class="h">Num:</h2><input class="inputs" type="number" name="num">
-            <br><input type="submit" value="run"><br><br><br>
+            <h2 class="h">From:</h2><input class="inputs" type="number" name="from" value="1"/><br>
+            <h2 class="h">To:</h2><input class="inputs" type="number" name="to" value="10">
+            <br><input type="submit" value="run" onclick="gc()"><br><br><br>
             <ul>
-                <li>Type Key: Analysis of the category</li>
-                <li>Min :Minimum number of works</li>
-                <li>Num :number of table</li>
+                <li>From: The beginning of the rating ranking</li>
+                <li>To : The ending of the rating ranking</li>
             </ul>
         </form>
     </div>
@@ -49,111 +42,66 @@
 
 
 <!-- 图表 start -->
-<script src="../js/echarts.min.js"></script>
+<script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
 <script type="text/javascript">
+    var dom = document.getElementById('main');
     let query = window.location.search.substring(1);
     let pair = query.split("=");
     if (pair[1] === 'success') {
 
-        let acc = JSON.parse(JSON.stringify(${Ave}));
+        console.log("6")
+        let acc = JSON.parse(JSON.stringify(${data1}));
         let list = acc.rows;
-        let data1 = [];
-        let data2 = [];
-        let dataAxis = [];
-        let split;
-        let option;
+        console.log(list)
 
+        let data = [['score', 'amount', 'product']], split, min_year = 3000
         for (let item of list) {
-            dataAxis.push(item.key)
-            split = item.value.split(":");
-            data1.push(split[0])
-            data2.push(split[1])
+            split = item.v.split("$")
+            if (min_year > split[1]) min_year = split[1]
+            data.push([split[0], split[1], item.k])
         }
-        console.log(dataAxis);
-        console.log(data1);
-        console.log(data2);
+        console.log(data)
+        min_year = min_year - 5
+        console.log(min_year)
 
-        let dom = document.getElementById('main');
         let myChart = echarts.init(dom, null, {
-            width: 700,
-            height: 500
+            width: 900,
+            height: 550
         });
+        let option = null;
 
-        const colors = ['#5470C6', '#91CC75', '#EE6666'];
         option = {
-            color: colors,
+
             tooltip: {
-                trigger: 'axis',
-                axisPointer: {
-                    type: 'cross'
+                trigger: 'item'
+            },
+            dataset: {
+                source: data
+            },
+            grid: {containLabel: true},
+            xAxis: {name: 'amount', min: min_year},
+            yAxis: {type: 'category'},
+            visualMap: {
+                orient: 'horizontal',
+                precision: 1,
+                left: 'center',
+                min: 0.0,
+                max: 5.0,
+                text: ['to 5', 'Rate From 1'],
+                dimension: 0,
+                inRange: {
+                    color: ['#05FFA8', '#07F2E9', '#00BBF7']
                 }
             },
-            toolbox: {
-                feature: {
-                    dataView: { show: true, readOnly: false },
-                    restore: { show: true },
-                    saveAsImage: { show: true }
-                }
-            },
-            legend: {
-                data: ['vate', 'number']
-            },
-            xAxis: [
-                {
-                    type: 'category',
-                    axisTick: {
-                        alignWithLabel: true
-                    },
-                    data: dataAxis
-                }
-            ],
-            yAxis: [
-                {
-                    type: 'value',
-                    name: '评分',
-                    min: function(value) {
-                        return (value.min - 0.1);
-                    },
-                    max: function(value) {
-                        return (value.max + 0.1);
-                    },
-                    position: 'right',
-                    axisLine: {
-                        show: true,
-                        lineStyle: {
-                            color: colors[0]
-                        }
-                    }
-                },
-                {
-                    type: 'value',
-                    name: '作品数量',
-                    min: function(value) {
-                        return (value.min - 1);
-                    },
-                    max: function(value) {
-                        return (value.max + 1);
-                    },
-                    position: 'left',
-                    axisLine: {
-                        show: true,
-                        lineStyle: {
-                            color: colors[2]
-                        }
-                    }
-                }
-            ],
             series: [
                 {
-                    name: 'vate',
                     type: 'bar',
-                    data: data1
-                },
-                {
-                    name: 'number',
-                    type: 'line',
-                    yAxisIndex: 1,
-                    data: data2
+                    encode: {
+                        // Map the "amount" column to X axis.
+                        x: 'amount',
+                        // Map the "product" column to Y axis
+                        y: 'product'
+                    }
                 }
             ]
         };
@@ -162,9 +110,66 @@
             myChart.setOption(option, true);
         }
 
-    }
-    else if(pair[1] === 'error'){
+    } else if (pair[1] === 'error') {
         alert("error")
+    }
+
+    function gc() {
+        let myChart = echarts.init(dom, null, {
+            width: 800,
+            height: 500
+        });
+        let option = {
+            graphic: {
+                elements: [
+                    {
+                        type: 'text',
+                        left: 'center',
+                        top: 'center',
+                        style: {
+                            text: 'Analyzing the Movie',
+                            fontSize: 80,
+                            fontWeight: 'bold',
+                            lineDash: [0, 200],
+                            lineDashOffset: 0,
+                            fill: 'transparent',
+                            stroke: '#000',
+                            lineWidth: 1
+                        },
+                        keyframeAnimation: {
+                            duration: 3000,
+                            loop: true,
+                            keyframes: [
+                                {
+                                    percent: 0.7,
+                                    style: {
+                                        fill: 'transparent',
+                                        lineDashOffset: 200,
+                                        lineDash: [200, 0]
+                                    }
+                                },
+                                {
+                                    // Stop for a while.
+                                    percent: 0.8,
+                                    style: {
+                                        fill: 'transparent'
+                                    }
+                                },
+                                {
+                                    percent: 1,
+                                    style: {
+                                        fill: 'black'
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
+        };
+        if (option && typeof option === "object") {
+            myChart.setOption(option, true);
+        }
     }
 </script>
 

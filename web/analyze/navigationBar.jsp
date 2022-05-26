@@ -21,11 +21,12 @@
         <div id="menu-bar"></div>
 
         <nav class="navbar">
-            <a href="index.jsp">home</a>
-            <a href="jsp1.jsp">jsp1</a>
-            <a href="jsp2.jsp">jsp2</a>
-            <a href="jsp3.jsp">jsp3</a>
-            <a href="jsp4.jsp">jsp4</a>
+            <a href="index.jsp">HOME</a>
+            <a href="jsp1.jsp">Rank</a>
+            <a href="jsp2.jsp">Len</a>
+            <a href="jsp3.jsp">Count</a>
+            <a href="jsp4.jsp">Year</a>
+            <a href="jsp5.jsp">Prime</a>
         </nav>
 
         <div class="dropdown">
@@ -38,8 +39,6 @@
     </div>
 
 </header>
-<script language="JavaScript">
-    console.log(`${user}.name`)
-</script>
+
 </body>
 </html>

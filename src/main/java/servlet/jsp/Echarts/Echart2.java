@@ -2,6 +2,8 @@ package servlet.jsp.Echarts;
 
 
 import HQL.hql2;
+import com.alibaba.fastjson.JSONObject;
+import model.KV_JavaBeen;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,14 +29,15 @@ public class Echart2 extends HttpServlet {
         int limit = Integer.parseInt(request.getParameter("limit"));
         System.out.println("Rate: " + rate + " Len: " + len + " Limit: " + limit);
         try {
-            List<String> movies = hql2.getMovies(3.0,30,10);
-            for (String movie : movies) {
-                System.out.println(movie);
-            }
+            ArrayList<KV_JavaBeen> movies = hql2.getMovies(rate, len, limit);
+            JSONObject targetJson = new JSONObject();
+            targetJson.put("rows", movies);
+            request.getSession().setAttribute("data2", targetJson);
+            stauts = "success";
         } catch (Exception e) {
             e.printStackTrace();
         }
-        stauts = "success";
+
         response.sendRedirect(URL+"?status=" + stauts);
 
     }

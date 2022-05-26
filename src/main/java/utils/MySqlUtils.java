@@ -52,7 +52,7 @@ public class MySqlUtils {
         Connection con = createConnection();
         Statement stmt = con.createStatement();
 
-        String sql = "SELECT UserName from user where UserName = '" + name + "'";
+        String sql = "SELECT UserName from niit.user where UserName = '" + name + "'";
         ResultSet resultSet = stmt.executeQuery(sql);
         return resultSet.next();
     }
@@ -69,7 +69,7 @@ public class MySqlUtils {
     public static String getEmail(String username, String password) throws SQLException, ClassNotFoundException {
         Connection con = createConnection();
 
-        String sql = "select * from tb_user where username = ? and password = ?";
+        String sql = "select * from niit.user where username = ? and password = ?";
         PreparedStatement ps = con.prepareStatement(sql);
 
         ps.setString(1, username);
